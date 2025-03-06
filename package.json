@@ -2,15 +2,12 @@
   "name": "wavework-server",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module", 
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
