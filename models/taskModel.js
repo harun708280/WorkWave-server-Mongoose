@@ -10,7 +10,12 @@ const taskSchema=mongoose.Schema({
         enum:['Easy','Medium','High'],
         
     },
-    createAt:{type:Date,default:Date.now}
+    createAt:{type:Date,default:Date.now},
+    status:{
+        type:String,
+        enum:['pending','running','completed','archived'],
+        default:'pending'
+    }
 })
 
 const Tasks=mongoose.model("Tasks",taskSchema)
