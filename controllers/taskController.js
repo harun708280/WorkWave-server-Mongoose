@@ -29,6 +29,26 @@ export const getAllTask=async(req,res)=>{
 
 }
 
+export const getTask=async(req,res)=>{
+    try {
+        const { status } = req.query; 
+        let filter = {}; 
+
+        if (status && status !== "all") {
+            filter.status = status; 
+        }
+
+        const tasks = await Tasks.find(filter)
+            .sort({ _id: -1 }) 
+            .populate("assignTo", "name email photo");
+
+        res.status(200).json(tasks);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
 export const updateTaskStatus=async(req,res)=>{
     try{
         const {taskId}=req.params;
@@ -39,6 +59,18 @@ export const updateTaskStatus=async(req,res)=>{
         if (!updatedTask) return res.status(404).json({ message: "Task not found" });
 
         res.status(200).json(updatedTask);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const deleteTask=async(req,res)=>{
+    try{
+        const {taskId}=req.params
+        const deletedTask=await Tasks.findByIdAndDelete(taskId)
+        if (!deletedTask) return res.status(404).json({ message: "Task not found" });
+
+        res.status(200).json({ message: "Task deleted successfully", taskId });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
